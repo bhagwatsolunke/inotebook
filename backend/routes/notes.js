@@ -7,7 +7,8 @@ const Note = require('../models/Note'); // Update the import
 // ROUTE 1: Get all the notes using: GET "/api/notes/fetchallnotes". Login required
 router.get('/fetchallnotes', fetchuser, async (req, res) => {
   try {
-    const notes = await Note.findAll({ where: { user: req.user.id } }); // Update query
+    const userId = req.user.id; 
+    const notes = await Note.findAll({ where: { userId } });
     res.json(notes);
   } catch (error) {
     console.error(error.message);
@@ -32,7 +33,7 @@ router.post('/addnote', fetchuser, [
       title,
       description,
       tag,
-      user: req.user.id,
+      userId: req.user.id,
     });
 
     res.json(note);

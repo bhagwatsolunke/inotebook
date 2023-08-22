@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db'); // Update the import
-
+const User = require('./User');
 const Note = sequelize.define('note', {
   id: {
     type: DataTypes.INTEGER,
@@ -24,5 +24,8 @@ const Note = sequelize.define('note', {
     defaultValue: DataTypes.NOW,
   },
 });
+
+Note.belongsTo(User, { foreignKey: 'userId', onDelete: 'CASCADE' });
+User.hasMany(Note); 
 
 module.exports = Note;
