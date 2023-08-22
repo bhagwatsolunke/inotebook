@@ -1,12 +1,21 @@
-const mongoose =require('mongoose');
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize(
+ 'Inotebook',
+ 'root',
+ '1234567890',
+  {
+    host: '127.0.0.1',
+    dialect: 'mysql'
+  }
+);
 
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connected to MySQL successfully');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MySQL:', error);
+  });
 
-
-const mongoURI = "mongodb://127.0.0.1:27017/inotebook?directConnection=true";
-
-const connectToMongo=()=>{
-    mongoose.connect(mongoURI,()=>{
-        console.log("Connect to Mongo Successfully");
-    })
-}
-module.exports=connectToMongo;
+module.exports = sequelize;
