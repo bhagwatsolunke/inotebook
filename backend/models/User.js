@@ -1,29 +1,25 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../db'); // Update the import
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const User = sequelize.define('user', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  date: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-});
+const UserSchema = new Schema({
+    name:{
+        type: String,
+        required: true
+    },
+    email:{
+        type: String,
+        required: true,
+        unique: true
+    },
+    password:{
+        type: String,
+        required: true
+    },
+    date:{
+        type: Date,
+        default: Date.now
+    },
+  });
 
-module.exports = User;
+  const User = mongoose.model('user', UserSchema);
+  module.exports = User;
